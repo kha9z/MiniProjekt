@@ -1,42 +1,46 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import logo from './assets/logotrans.png'
-
 import type { Film } from './film'
 import { getFilms } from './api/films'
 
 function App() {
+
     const [films, setFilms] = useState<Film[]>([])
 
     useEffect(() => {
-        async function loadFilms(): Promise<void> {
-            const data: Film[] = await getFilms()
-            setFilms(data)
-        }
-        loadFilms()
+        getFilms(setFilms)
     }, [])
 
     return (
         <div className="app">
             <header className="header">
-                <img 
+
+                <img
                     src={logo}
-                    className="Logo" />
+                    className="Logo"
+                    alt="Studio Ghibli"
+                />
 
                 <button className="favorites-button">
                     <span>Favoriter</span>
                 </button>
-
             </header>
 
             <main>
-                <input 
+                <input
                     className="search"
                     type="text"
                     placeholder="Sök efter film"
                 />
             </main>
+            <button onClick={() => getFilms(setFilms)}>
+                Hämta filmzz
+            </button>
+
+            <p>Antal filmzz: {films.length}</p>
         </div>
     )
 }
+
 export default App
