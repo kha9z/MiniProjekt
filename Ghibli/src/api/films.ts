@@ -1,4 +1,5 @@
-import type { Film } from "../film"
+import * as z from 'zod'
+import { filmSchema, type Film} from '../validation/filmSchema'
 
 type ReactSet = (films: Film[]) => void
 
@@ -14,11 +15,9 @@ try {
     
     const data: unknown = await response.json()
 
-    if (!Array.isArray(data)) {
-        throw new Error('Datan är inte en lista.')
-    }
-
-    const parsedData: Film[] = data as Film[]
+    const parsedData: Film[] = z
+        .array(filmSchema)
+        .parse(data)
 
     setFilms(parsedData)
 
