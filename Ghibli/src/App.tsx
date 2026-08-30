@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import logo from './assets/logotrans.png'
-import type { Film } from './film'
+import type { Film } from './validation/filmSchema'
 import { getFilms } from './api/films'
 
 function App() {
