@@ -1,9 +1,5 @@
 import * as z from 'zod'
-import {
-    FilmSchema,
-    type Film,
-    type ApiState
-} from './types'
+import { FilmSchema, type Film, type ApiState } from './types'
 
 type ReactSet = (state: ApiState) => void
 
@@ -22,7 +18,6 @@ async function getFilms(setApiState: ReactSet): Promise<void> {
         }
 
         const data: unknown = await response.json()
-
         const parsedData: Film[] = z.array(FilmSchema).parse(data)
 
         setApiState({
@@ -41,7 +36,6 @@ async function getFilms(setApiState: ReactSet): Promise<void> {
             status: 'error',
             message
         })
-
         console.error('Fel vid hämtning av filmer:', message)
     }
 }
