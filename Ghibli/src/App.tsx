@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import logo from './assets/logotrans.png'
-import type { Film } from './validation/filmSchema'
-import { getFilms } from './api/films'
+
+import type { ApiState } from './data/types'
+import { getFilms } from './data/ghibliApi'
 
 function App() {
 
-    const [films, setFilms] = useState<Film[]>([])
+    const [apiState, setApiState] =
+        useState<ApiState>({ status: 'idle' })
 
     useEffect(() => {
-        getFilms(setFilms)
+        getFilms(setApiState)
     }, [])
 
     return (
         <div className="app">
-            <header className="header">
 
+            <header className="header">
                 <img
                     src={logo}
                     className="Logo"
@@ -33,12 +35,23 @@ function App() {
                     type="text"
                     placeholder="Sök efter film"
                 />
-            </main>
-            <button onClick={() => getFilms(setFilms)}>
-                Hämta filmzz
-            </button>
 
-            <p>Antal filmzz: {films.length}</p>
+                <p>Status: {apiState.status}</p>
+
+                {apiState.status === 'loading' && (
+                    <p>Laddar filmer...</p>
+                )}
+
+                {apiState.status === 'error' && (
+                    <p>Fel: {apiState.message}</p>
+                )}
+
+                {apiState.status === 'success' && (
+                    <p>
+                        Antal filmer: {apiState.data.length}
+                    </p>
+                )}  
+            </main>
         </div>
     )
 }
