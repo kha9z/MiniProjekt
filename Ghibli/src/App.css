@@ -90,10 +90,11 @@ body {
 
 .heart-button {
   position: absolute;
+  color: white;
   top: 10px;
   right: 22px;
   border: none;
-  /* background: transparent; */
+  background: transparent;
   font-size: 2rem;
   cursor: pointer;
   z-index: 1;
